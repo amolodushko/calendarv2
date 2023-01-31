@@ -28,7 +28,7 @@ code {
 }
 
 .fc-scrollgrid-section-header > th:first-child,
-.fc-scrollgrid-section-body > td:first-child{
+.fc-scrollgrid-section-body > td:first-child {
     position: relative;
     z-index: 5;
     background: white;

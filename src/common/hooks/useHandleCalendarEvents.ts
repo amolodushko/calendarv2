@@ -1,6 +1,11 @@
 import { useEffect } from 'react';
 
-const useHandleCalendarEvents = ({ calendarRef, data, type, tm=5000 }: any) => {
+const useHandleCalendarEvents = ({
+  calendarRef,
+  data,
+  type,
+  tm = 5000,
+}: any) => {
   useEffect(() => {
     if (!calendarRef?.current) {
       return;
@@ -17,10 +22,10 @@ const useHandleCalendarEvents = ({ calendarRef, data, type, tm=5000 }: any) => {
         }
       });
 
-      data.forEach((item:any) => calendarApi.addEvent(item));
+      data.forEach((item: any) => calendarApi.addEvent(item));
     }, tm);
 
-    return ()=> clearTimeout(id);
+    return () => clearTimeout(id);
   }, [data, calendarRef]);
 };
 

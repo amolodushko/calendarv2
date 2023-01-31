@@ -6,7 +6,7 @@ const useCalendarEvents = () => {
   const stops = useStopsEvents();
   const shifts = useShiftEvents();
 
-  return useMemo(()=> {
+  return useMemo(() => {
     return {
       events: [...stops, ...shifts],
       color: 'transparent',

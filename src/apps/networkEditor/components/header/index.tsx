@@ -1,10 +1,15 @@
-import React from "react";
+import React from 'react';
 import CommonHeader from '@common/components/header';
-import useStyles from "./useStyles";
+import useStyles from './useStyles';
 
 const Header = () => {
-    const classes = useStyles();
-    return <div className={classes.root}> NE header +  <CommonHeader/> </div>
-}
+  const classes = useStyles();
+  return (
+    <div className={classes.root}>
+      {' '}
+      NE header + <CommonHeader />
+    </div>
+  );
+};
 
 export default Header;

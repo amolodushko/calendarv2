@@ -1,5 +1,6 @@
-import React from "react";
+import React from 'react';
+
 const Header = () => {
-    return <span> Common header content </span>
-}
+  return <span> Common header content </span>;
+};
 export default Header;
