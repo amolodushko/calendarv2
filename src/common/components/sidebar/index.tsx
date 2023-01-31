@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
+import React from 'react';
 import useStyles from './useStyles';
+import useSidebarStore from '@src/apps/store/sidebar';
+import Content from './content';
 
 const Sidebar = () => {
   const styles = useStyles();
-  const [visible, setVisible] = useState<boolean>(true);
+  const isOpen = useSidebarStore((state) => state.isOpen);
 
-  return visible ? (
+  return isOpen ? (
     <div className={styles.sideBarWrapper}>
-      <div className={styles.content}>
-        <button onClick={() => setVisible(false)}>close</button>
-      </div>
+      <Content />
     </div>
   ) : null;
 };

@@ -5,6 +5,9 @@ const shifts = [
     start: Date.now() - 43434343,
     end: Date.now() + 4343434,
     type: 'shift',
+    extendedProps: {
+      id: 1
+    },
     display: 'background',
     color: 'transparent',
   },
@@ -16,9 +19,15 @@ const shifts = [
     type: 'shift',
     display: 'background',
     color: 'transparent',
+    extendedProps: {
+      id: 2
+    }
   },
   {
     resourceId: 'e',
+    extendedProps: {
+      id: 3
+    },
     title: 'event e',
     start: Date.now() - 43434343,
     end: Date.now() + 4343434,

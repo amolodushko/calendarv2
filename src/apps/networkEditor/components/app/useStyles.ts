@@ -12,16 +12,8 @@ const useStyles = makeStyles({
     flexDirection: 'row',
     flex: 1,
     overflow: 'hidden',
-    // gap: "20px",
-    // padding: "20px",
-  },
-  mapWrapper: {
-    display: 'flex',
-    flexDirection: 'row',
-    flex: 1,
-    overflow: 'hidden',
-    zIndex: 2,
-  },
+    position: 'relative',
+  }
 });
 
 export default useStyles;

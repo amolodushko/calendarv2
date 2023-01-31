@@ -11,16 +11,7 @@ const useStyles = makeStyles({
     margin: '20px',
     boxShadow: '0 3px 5px 2px rgb(255 105 135 / 30%)',
     borderRadius: '15px',
-  },
-  mapWrapper: {
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    height: '100%',
-    width: '100%',
-    zIndex: 5,
-    display: 'flex',
-  },
+  }
 });
 
 export default useStyles;

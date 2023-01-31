@@ -1,14 +1,24 @@
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles({
-  map: {
-    flex: 1,
+  mapWrapper: {
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    height: '100%',
+    width: '100%',
+    'z-index': 'var(--map-z-index)',
     display: 'flex',
-    background: 'whitesmoke',
-    alignContent: 'center',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
+  actionWrapper: {
+    position: 'absolute',
+    width: '100%',
+    bottom: '20px',
+    zIndex: 6,
+    display: "flex",
+    alignItems: 'center',
+    justifyContent: "center"
+  }
 });
 
 export default useStyles;

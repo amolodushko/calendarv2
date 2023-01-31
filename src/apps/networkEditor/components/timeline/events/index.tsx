@@ -4,9 +4,9 @@ const Stop = React.lazy(() => import('@common/components/stop'));
 const Shift = React.lazy(() => import('@common/components/shift'));
 
 const renderEvent = (event: any) => {
-  const { type } = event?.event?.extendedProps;
+  const { type, id } = event?.event?.extendedProps;
   if (type === 'shift') {
-    return <Shift />;
+    return <Shift id={id} />;
   }
 
   if (type === 'stop') {

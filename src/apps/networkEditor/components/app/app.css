@@ -17,7 +17,9 @@ code {
 
 :root {
     --shift-background-color: rgba(234, 244, 254, 0.5);
+    --shift-selected-background-color: rgba(234, 244, 254, 0.9);
     --fc-bg-event-opacity: 1 !important;
+    --map-z-index: 5;
 }
 
 #root {
@@ -30,6 +32,6 @@ code {
 .fc-scrollgrid-section-header > th:first-child,
 .fc-scrollgrid-section-body > td:first-child {
     position: relative;
-    z-index: 5;
+    z-index: var(--map-z-index);
     background: white;
 }

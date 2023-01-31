@@ -8,9 +8,7 @@ const Timeline = () => {
   const styles = useStyles();
   const calendarRef = useRef(null);
   const resources = useCalendarResources();
-  const events = useCalendarEvents(calendarRef);
-
-  console.log('timeline');
+  const events = useCalendarEvents();
 
   return (
     <Calendar

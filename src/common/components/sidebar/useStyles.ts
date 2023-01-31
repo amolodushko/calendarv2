@@ -8,6 +8,9 @@ const useStyles = makeStyles({
     maxWidth: '350px',
     minWidth: '350px',
     overflow: 'hidden',
+    zIndex: 5,
+    backgroundColor: 'white',
+    borderRadius: '15px',
   },
   content: {
     display: 'flex',
@@ -15,7 +18,7 @@ const useStyles = makeStyles({
     padding: '20px',
     border: '1px solid #ddd',
     flex: 1,
-    borderRadius: '15px',
+    borderRadius: '15px 0 15px 15px',
   },
 });
 
