@@ -2,33 +2,50 @@ import { create } from 'zustand';
 
 type SelectionState = {
   selection: any;
-  select: (item: { id: string; selectionRef: any }, single?: boolean) => void;
-  selectX: (item: { id: string; selectionRef: any }, single?: boolean) => void;
+  publicSelection: any;
+  select: (item: { id: string }, single?: boolean) => number;
+  registerRef: (item: { id: string; itemRef: any }, single?: boolean) => void;
+  setPublicSelection: () => void;
   deselect: (id: string) => void;
+  deselectAll: () => void;
+  refsRegister: any;
 };
 
 const useSelectionStore = create<SelectionState>((set, get) => ({
   selection: new Map(),
+  publicSelection: new Map(),
+  refsRegister: new Map(),
+  //TODO: need to think about. maybe we don't need it at all
+  registerRef: (item) => { get().refsRegister.set(item.id, item) },
   select: (item, single = true) => {
     const current = get().selection;
+    const deselectAll = get().deselectAll;
     if (single && current.size >= 1) {
-      current.forEach(({ selectionRef }: any) =>
-        selectionRef?.current?.deselect()
-      );
-      current.clear();
+      deselectAll();
     }
     get().selection.set(item.id, item);
+    get().setPublicSelection();
+    return get().selection.size;
   },
-  selectX: (item) => {
+  setPublicSelection: () => {
     useSelectionStore.setState((prev) => ({
-      selection: new Map(prev.selection).set(item.id, item),
+      publicSelection: new Map(prev.selection),
     }));
   },
   deselect: (id) => {
-    const current = get().selection.get(id)?.selectionRef?.current;
-    current?.deselect();
-    get().selection.delete(id);
+    const selection = get().selection;
+    const refsRegister = get().refsRegister;
+    if (selection.has(id)) {
+      const item = refsRegister.get(id)?.itemRef?.current;
+      item?.deselect(selection.size - 1);
+      selection.delete(id);
+    }
+    get().setPublicSelection();
   },
+  deselectAll: () => {
+    const deselect = get().deselect;
+    get().selection.forEach(({ id }: any) => deselect(id));
+  }
 }));
 
 export default useSelectionStore;
