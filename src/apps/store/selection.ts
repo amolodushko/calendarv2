@@ -3,7 +3,8 @@ import { create } from 'zustand';
 type SelectionState = {
   selection: any;
   publicSelection: any;
-  select: (item: { id: string }, single?: boolean) => number;
+  select: (item: { id: string; itemRef: any }, single?: boolean) => number;
+  selectShiftById: (id: string) => void;
   registerRef: (item: { id: string; itemRef: any }, single?: boolean) => void;
   setPublicSelection: () => void;
   deselect: (id: string) => void;
@@ -15,8 +16,18 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
   selection: new Map(),
   publicSelection: new Map(),
   refsRegister: new Map(),
-  //TODO: need to think about. maybe we don't need it at all
-  registerRef: (item) => { get().refsRegister.set(item.id, item) },
+  registerRef: (item) => {
+    get().refsRegister.set(item.id, item);
+  },
+  selectShiftById: (id, keepExisting = false) => {
+    const selection = get().selection;
+    const refsRegister = get().refsRegister;
+    if (selection.has(id)) {
+      const item = refsRegister.get(id);
+      return get().select(item, !keepExisting);
+    }
+    return null;
+  },
   select: (item, single = true) => {
     const current = get().selection;
     const deselectAll = get().deselectAll;
@@ -24,8 +35,10 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
       deselectAll();
     }
     get().selection.set(item.id, item);
+    const size = get().selection.size;
+    item?.itemRef.current.select(size);
     get().setPublicSelection();
-    return get().selection.size;
+    return size;
   },
   setPublicSelection: () => {
     useSelectionStore.setState((prev) => ({
@@ -36,15 +49,17 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
     const selection = get().selection;
     const refsRegister = get().refsRegister;
     if (selection.has(id)) {
-      const item = refsRegister.get(id)?.itemRef?.current;
-      item?.deselect(selection.size - 1);
+      const refItem = refsRegister.get(id)?.itemRef?.current;
+      refItem?.deselect(selection.size - 1);
       selection.delete(id);
     }
     get().setPublicSelection();
+    return get().selection.size;
   },
   deselectAll: () => {
     const deselect = get().deselect;
     get().selection.forEach(({ id }: any) => deselect(id));
+    return get().selection.size;
   }
 }));
 

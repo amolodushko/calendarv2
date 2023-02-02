@@ -4,7 +4,7 @@ import {devtools, persist} from "zustand/middleware";
 type SelectionState = {
   selection: any;
   select: (item: { id: string; selectionRef: any }, single?: boolean) => void;
-  deselect: (id: string) => void;
+  deselect: (item: { id: string; selectionRef: any }) => void;
 };
 
 const useSelectionStore = create<SelectionState>()(
