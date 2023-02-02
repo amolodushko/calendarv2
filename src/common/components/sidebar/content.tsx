@@ -1,17 +1,19 @@
 import React from 'react';
 import useStyles from './useStyles';
 import useSelectionStore from '@src/apps/store/selection';
-import useCloseSidebarHandler from "@common/hooks/useCloseSidebarHandler";
+import useChangeSidebarStateHandler from '@common/hooks/useChangeSidebarStateHandler';
+import useSidebarStore from '@src/apps/store/sidebar';
 
 const Content = () => {
   const styles = useStyles();
-  const { closeHandler, status } = useCloseSidebarHandler();
+  const closeSidebar = useChangeSidebarStateHandler();
+  const status = useSidebarStore((state) => state.status);
   const publicSelection = useSelectionStore((state) => state.publicSelection);
   const [selected]: any = Array.from(publicSelection.values());
 
   return (
     <div className={styles.content}>
-      <button onClick={closeHandler}>close</button>
+      <button onClick={() => closeSidebar()}>close</button>
       {status === 'SHIFT_INFO' ? (
         <div>
           {publicSelection.size}

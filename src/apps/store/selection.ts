@@ -7,8 +7,8 @@ type SelectionState = {
   selectShiftById: (id: string) => void;
   registerRef: (item: { id: string; itemRef: any }, single?: boolean) => void;
   setPublicSelection: () => void;
-  deselect: (id: string) => void;
-  deselectAll: () => void;
+  deselect: (id: string, silent?: boolean) => void;
+  deselectAll: (silent?: boolean) => void;
   refsRegister: any;
 };
 
@@ -20,9 +20,8 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
     get().refsRegister.set(item.id, item);
   },
   selectShiftById: (id, keepExisting = false) => {
-    const selection = get().selection;
     const refsRegister = get().refsRegister;
-    if (selection.has(id)) {
+    if (refsRegister.has(id)) {
       const item = refsRegister.get(id);
       return get().select(item, !keepExisting);
     }
@@ -36,7 +35,7 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
     }
     get().selection.set(item.id, item);
     const size = get().selection.size;
-    item?.itemRef.current.select(size);
+    item?.itemRef.current.select({ size });
     get().setPublicSelection();
     return size;
   },
@@ -45,22 +44,25 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
       publicSelection: new Map(prev.selection),
     }));
   },
-  deselect: (id) => {
+  deselect: (id, silent = false) => {
     const selection = get().selection;
     const refsRegister = get().refsRegister;
     if (selection.has(id)) {
       const refItem = refsRegister.get(id)?.itemRef?.current;
-      refItem?.deselect(selection.size - 1);
+      refItem?.deselect({
+        size: selection.size - 1,
+        silent
+      });
       selection.delete(id);
     }
     get().setPublicSelection();
     return get().selection.size;
   },
-  deselectAll: () => {
+  deselectAll: (silent = false) => {
     const deselect = get().deselect;
-    get().selection.forEach(({ id }: any) => deselect(id));
+    get().selection.forEach(({ id }: any) => deselect(id, silent));
     return get().selection.size;
-  }
+  },
 }));
 
 export default useSelectionStore;

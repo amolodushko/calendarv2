@@ -1,17 +1,21 @@
 import React from 'react';
 import CommonHeader from '@common/components/header';
 import useStyles from './useStyles';
-import useSidebarStore from "@src/apps/store/sidebar";
+import useSelectionStore from "@src/apps/store/selection";
+import useChangeSidebarStateHandler from "@common/hooks/useChangeSidebarStateHandler";
 
 const Header = () => {
   const classes = useStyles();
-  const toggle = useSidebarStore(state => state.toggle);
+  const selectShiftById = useSelectionStore(state => state.selectShiftById);
+  const closeHandler = useChangeSidebarStateHandler();
 
   return (
     <div className={classes.root}>
       {' '}
       NE header + <CommonHeader />
-      <button onClick={()=>toggle()}>Toggle sidebar</button>
+      <button onClick={()=>selectShiftById('1')}>select first shift</button>
+      <button onClick={()=>closeHandler('CLOSED')}>Close sidebar</button>
+      <button onClick={()=>closeHandler('NEW')}>Open new sidebar</button>
     </div>
   );
 };

@@ -6,7 +6,7 @@ const shifts = [
     end: Date.now() + 4343434,
     type: 'shift',
     extendedProps: {
-      id: 1
+      id: '1'
     },
     display: 'background',
     color: 'transparent',
@@ -20,13 +20,13 @@ const shifts = [
     display: 'background',
     color: 'transparent',
     extendedProps: {
-      id: 2
+      id: '2'
     }
   },
   {
     resourceId: 'e',
     extendedProps: {
-      id: 3
+      id: '3'
     },
     title: 'event e',
     start: Date.now() - 43434343,

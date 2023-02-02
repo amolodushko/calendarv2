@@ -14,13 +14,13 @@ const useShiftSelection = (id: string) => {
     toggle(selectionSize === 1 ? 'SHIFT_INFO' : 'CLOSED');
 
   const itemRef = useRef({
-    deselect: (size: number) => {
+    deselect: ({size, silent = false}:{size: number, silent: boolean}) => {
       setSelected(false);
-      toggleSidebar(size);
+      !silent && toggleSidebar(size);
     },
-    select: (size: number) => {
+    select: ({size, silent = false}:{size: number, silent: boolean}) => {
       setSelected(true);
-      toggleSidebar(size);
+      !silent && toggleSidebar(size);
     },
   });
 

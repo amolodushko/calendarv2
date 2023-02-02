@@ -1,7 +1,7 @@
 import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 
-type Statuses = 'OPEN' | 'CLOSED' | 'NEW' | 'SHIFT_INFO';
+export type Statuses = 'OPEN' | 'CLOSED' | 'NEW' | 'SHIFT_INFO';
 
 type SidebarState = {
   status: Statuses;
