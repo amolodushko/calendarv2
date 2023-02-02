@@ -11,14 +11,18 @@ const Content = () => {
   const publicSelection = useSelectionStore((state) => state.publicSelection);
   const [selected]: any = Array.from(publicSelection.values());
 
+  //TODO: move all if to separated components and load the lazy
   return (
     <div className={styles.content}>
       <button onClick={() => closeSidebar()}>close</button>
       {status === 'SHIFT_INFO' ? (
         <div>
-          {publicSelection.size}
-          {selected?.id}
+          {publicSelection.size} - shift selection size <br/>
+          {selected?.id} - shift id
         </div>
+      ) : null}
+      {status === 'NEW' ? (
+        `this is new sidebar`
       ) : null}
     </div>
   );
