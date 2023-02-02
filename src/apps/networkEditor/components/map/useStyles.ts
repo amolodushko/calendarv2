@@ -14,11 +14,19 @@ const useStyles = makeStyles({
     position: 'absolute',
     width: '100%',
     bottom: '20px',
-    zIndex: 6,
-    display: "flex",
+    zIndex: 7,
+    display: 'flex',
     alignItems: 'center',
-    justifyContent: "center"
-  }
+    justifyContent: 'center',
+  },
+  toggleButton: {
+    color: 'blue',
+    padding: '10px',
+    '&:hover': {
+      color: 'yellow',
+      cursor: 'pointer',
+    },
+  },
 });
 
 export default useStyles;

@@ -12,7 +12,7 @@ const Map = () => {
   return (
     <>
       <div className={styles.actionWrapper}>
-        <button onClick={toggle}>
+        <button className={styles.toggleButton} onClick={toggle}>
           Toggle map
         </button>
       </div>
