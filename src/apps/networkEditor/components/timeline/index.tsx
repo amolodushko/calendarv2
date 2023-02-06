@@ -4,6 +4,7 @@ import useStyles from './useStyles';
 import useCalendarEvents from '@common/hooks/useCalendarEvents';
 import useCalendarResources from '@common/hooks/useCalendarResources';
 import renderEvent from './events';
+import renderResource from './resources/index';
 
 const Timeline = () => {
   const styles = useStyles();
@@ -17,6 +18,7 @@ const Timeline = () => {
         resources={resources}
         events={events}
         eventContent={renderEvent}
+        resourceLabelContent={renderResource}
         eventBackgroundColor={'transparent'}
       />
     </div>

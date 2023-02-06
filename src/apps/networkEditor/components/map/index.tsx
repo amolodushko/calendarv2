@@ -13,7 +13,7 @@ const Map = () => {
     <>
       <div className={styles.actionWrapper}>
         <button className={styles.toggleButton} onClick={toggle}>
-          Toggle map
+          {isMapView? 'Hide Map': 'Show map'}
         </button>
       </div>
       {isMapView ? (

@@ -4,7 +4,6 @@ import FullCalendar from '@fullcalendar/react';
 import { CalendarOptions } from '@fullcalendar/core';
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline';
 import useStyles from './useStyles';
-import renderEvent from '@planner/components/timeline/events';
 
 export interface CalendarProps extends CalendarOptions {
   className?: string;
@@ -32,7 +31,8 @@ const Calendar = ({
   slotLaneClassNames = 'fc-slot-lane',
   slotMinTime = 0,
   calendarRef,
-  eventContent = renderEvent,
+  eventContent,
+  resourceLabelContent,
   ...rest
 }: CalendarProps) => {
   const styles = useStyles();
@@ -40,6 +40,7 @@ const Calendar = ({
     <div className={`${styles.root} ${className}`}>
       <FullCalendar
         eventContent={eventContent}
+        resourceLabelContent={resourceLabelContent}
         ref={calendarRef}
         slotLabelClassNames={slotLabelClassNames}
         slotLaneClassNames={slotLaneClassNames}

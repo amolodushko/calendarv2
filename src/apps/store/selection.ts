@@ -1,43 +1,37 @@
 import { create } from 'zustand';
+import useReferencesStore from '@src/apps/store/refsRegister';
 
 type SelectionState = {
   selection: any;
   publicSelection: any;
-  select: (item: { id: string; itemRef: any }, single?: boolean) => number;
+  select: (id: string, single?: boolean) => number;
   selectShiftById: (id: string) => void;
-  registerRef: (item: { id: string; itemRef: any }, single?: boolean) => void;
   setPublicSelection: () => void;
   deselect: (id: string, silent?: boolean) => void;
   deselectAll: (silent?: boolean) => void;
-  refsRegister: any;
 };
+
+const type = 'shift';
 
 const useSelectionStore = create<SelectionState>((set, get) => ({
   selection: new Map(),
   publicSelection: new Map(),
-  refsRegister: new Map(),
-  registerRef: (item) => {
-    get().refsRegister.set(item.id, item);
-  },
   selectShiftById: (id, keepExisting = false) => {
-    const refsRegister = get().refsRegister;
-    if (refsRegister.has(id)) {
-      const item = refsRegister.get(id);
-      return get().select(item, !keepExisting);
-    }
-    return null;
+    const getRef = useReferencesStore.getState().getRef;
+    const target = getRef(id, type);
+    return target ? get().select(id, !keepExisting) : null;
   },
-  select: (item, single = true) => {
-    const current = get().selection;
-    const deselectAll = get().deselectAll;
-    if (single && current.size >= 1) {
-      deselectAll();
+  select: (id, single = true) => {
+    const selection = get().selection;
+    const getRef = useReferencesStore.getState().getRef;
+    const refItem = getRef(id, type)?.itemRef;
+    if (single && selection.size >= 1) {
+      get().deselectAll();
     }
-    get().selection.set(item.id, item);
-    const size = get().selection.size;
-    item?.itemRef.current.select({ size });
+    selection.set(id, { id, refItem });
+    refItem?.current.select({ size: selection.size });
     get().setPublicSelection();
-    return size;
+    return selection.size;
   },
   setPublicSelection: () => {
     useSelectionStore.setState((prev) => ({
@@ -46,17 +40,17 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
   },
   deselect: (id, silent = false) => {
     const selection = get().selection;
-    const refsRegister = get().refsRegister;
     if (selection.has(id)) {
-      const refItem = refsRegister.get(id)?.itemRef?.current;
+      const getRef = useReferencesStore.getState().getRef;
+      const refItem = getRef(id, type)?.itemRef?.current;
       refItem?.deselect({
         size: selection.size - 1,
-        silent
+        silent,
       });
       selection.delete(id);
     }
     get().setPublicSelection();
-    return get().selection.size;
+    return selection.size;
   },
   deselectAll: (silent = false) => {
     const deselect = get().deselect;
