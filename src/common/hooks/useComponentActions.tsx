@@ -4,10 +4,10 @@ import useSelectionStore from '@src/apps/store/selection';
 export type SelectActionCbProps = { size: number; silent?: boolean };
 
 interface ActionItem {
-  deselect: (props?: SelectActionCbProps) => void;
-  select: (props?: SelectActionCbProps) => void;
-  setMouseEnter: () => void;
-  setMouseLeave: () => void;
+  deselect?: (props?: SelectActionCbProps) => void;
+  select?: (props?: SelectActionCbProps) => void;
+  setMouseEnter?: () => void;
+  setMouseLeave?: () => void;
   type: RefTypes;
 }
 

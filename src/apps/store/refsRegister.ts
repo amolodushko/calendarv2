@@ -3,13 +3,17 @@ import { useLayoutEffect } from 'react';
 import { ItemRef } from '@common/hooks/useComponentActions';
 
 export type RefTypes = 'shift' | 'driver' | 'stop' | 'unknown';
+//TODO: rename item ref. ItemRef
+// here we can store id and anything else.
+// but we also need to have itemRef to provide an asses to component function to highligh it or select
+type StoredRefItem = { id: string; itemRef: ItemRef };
 
 type RefsState = {
   registerRef: (
-    item: { id: string; itemRef: ItemRef },
+    item: StoredRefItem,
     type?: RefTypes
   ) => void;
-  getRef: (id: string, type?: RefTypes) => any;
+  getRef: (id: string, type?: RefTypes) => StoredRefItem;
   refsRegister: any;
 };
 

@@ -19,9 +19,13 @@ const useShiftSelection = ({
     []
   );
 
+  //TODO: make it works
+  // const getRef = useReferencesStore(state => state.getRef);
+
   const onHoverChange = useCallback(() => {
-    //TODO: use useReferencesStore to highlight driver as selected by resourceId
-    console.log('resourceId', resourceId);
+    //@ts-ignore
+    // getRef(resourceId, 'driver')?.itemRef.current?.setMouseEnter();
+    console.log('res id', resourceId);
   }, []);
 
   return useComponentActions({
