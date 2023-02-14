@@ -36,3 +36,7 @@ code {
     z-index: var(--map-z-index);
     background: white;
 }
+
+.fc-bg-event {
+    display: flex;
+}

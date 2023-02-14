@@ -4,7 +4,7 @@
   "description": "",
   "scripts": {
     "start:planner": "webpack serve --config ./src/apps/planner/webpack.dev.js --env app=planner --progress",
-    "start:networkEditor": "webpack serve --config ./src/apps/networkEditor/webpack.dev.js --env app=ne --progress",
+    "start": "webpack serve --config ./src/apps/networkEditor/webpack.dev.js --env app=ne --progress",
     "build": "webpack --mode production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

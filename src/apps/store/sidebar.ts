@@ -15,8 +15,12 @@ const useSidebarStore = create<SidebarState>()(
   devtools(
     persist(
       (set) => ({
+
+
         status: 'CLOSED',
         isOpen: false,
+
+
         toggle: (newState) => {
           if (!newState) {
             return set((state) => {

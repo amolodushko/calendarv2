@@ -3,6 +3,7 @@ import useSidebarStore from '@src/apps/store/sidebar';
 import useComponentActions, {
   SelectActionCbProps,
 } from '@common/hooks/useComponentActions';
+import useReferencesStore from "@src/apps/store/refsRegister";
 
 const useShiftSelection = ({
   id,
@@ -19,13 +20,10 @@ const useShiftSelection = ({
     []
   );
 
-  //TODO: make it works
-  // const getRef = useReferencesStore(state => state.getRef);
-
-  const onHoverChange = useCallback(() => {
-    //@ts-ignore
-    // getRef(resourceId, 'driver')?.itemRef.current?.setMouseEnter();
-    console.log('res id', resourceId);
+  const onHoverChange = useCallback((isOver: boolean) => {
+    const getRegisteredItem = useReferencesStore.getState().getRegisteredItem;
+    const driverItem = getRegisteredItem(resourceId, 'driver');
+    driverItem.ref.current[!isOver? 'setMouseLeave' : 'setMouseEnter']();
   }, []);
 
   return useComponentActions({

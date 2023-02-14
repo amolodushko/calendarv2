@@ -11,7 +11,7 @@ interface ActionItem {
   type: RefTypes;
 }
 
-export type ItemRef = {
+export type ItemActionsRef = {
   current?: ActionItem;
 };
 
@@ -37,7 +37,7 @@ const useComponentActions = ({
   const [isSelected, setSelected] = useState(false);
   const [isHovered, setHovered] = useState(false);
 
-  const itemRef = useRef<ActionItem>({
+  const itemActionsRef = useRef<ActionItem>({
     type,
     deselect: (props: SelectActionCbProps) => {
       setSelected(false);
@@ -57,7 +57,7 @@ const useComponentActions = ({
     },
   });
 
-  useRegisterRef(id, itemRef);
+  useRegisterRef(id, itemActionsRef);
 
   const selectHandler = useCallback((e: React.MouseEvent) => {
     setSelected((isSelected) => {
@@ -81,6 +81,6 @@ const useComponentActions = ({
     [isHovered]
   );
 
-  return { itemRef, isSelected, isHovered, selectHandler, mouseOverHandler };
+  return { itemActionsRef, isSelected, isHovered, selectHandler, mouseOverHandler };
 };
 export default useComponentActions;

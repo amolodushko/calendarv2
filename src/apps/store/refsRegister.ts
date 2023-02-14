@@ -1,19 +1,20 @@
 import { create } from 'zustand';
 import { useLayoutEffect } from 'react';
-import { ItemRef } from '@common/hooks/useComponentActions';
+import { ItemActionsRef } from '@common/hooks/useComponentActions';
 
 export type RefTypes = 'shift' | 'driver' | 'stop' | 'unknown';
-//TODO: rename item ref. ItemRef
-// here we can store id and anything else.
-// but we also need to have itemRef to provide an asses to component function to highligh it or select
-type StoredRefItem = { id: string; itemRef: ItemRef };
+
+type StoredRefItem = {
+  id: string;
+  ref: ItemActionsRef
+};
 
 type RefsState = {
-  registerRef: (
+  registerItem: (
     item: StoredRefItem,
     type?: RefTypes
   ) => void;
-  getRef: (id: string, type?: RefTypes) => StoredRefItem;
+  getRegisteredItem: (id: string, type?: RefTypes) => StoredRefItem;
   refsRegister: any;
 };
 
@@ -21,16 +22,16 @@ const makeId = (id: string, type: RefTypes) => `${id}_${type}`;
 
 const useReferencesStore = create<RefsState>((set, get) => ({
   refsRegister: new Map(),
-  registerRef: (item, type = 'unknown') =>
+  registerItem: (item, type = 'unknown') =>
     get().refsRegister.set(makeId(item.id, type), item),
-  getRef: (id, type = 'unknown') => get().refsRegister.get(makeId(id, type)),
+  getRegisteredItem: (id, type = 'unknown') => get().refsRegister.get(makeId(id, type)),
 }));
 
-export const useRegisterRef = (id: string, itemRef: ItemRef) => {
-  const registerRef = useReferencesStore((state) => state.registerRef);
+export const useRegisterRef = (id: string, ref: ItemActionsRef) => {
+  const registerItem = useReferencesStore((state) => state.registerItem);
 
   useLayoutEffect(() => {
-    registerRef({ id, itemRef }, itemRef.current.type);
+    registerItem({ id, ref }, ref.current.type);
   }, []);
 };
 

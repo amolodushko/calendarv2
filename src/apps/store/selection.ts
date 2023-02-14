@@ -13,23 +13,27 @@ type SelectionState = {
 
 const type = 'shift';
 
+const getRegisteredRef = (id: string) => {
+  const getRegisteredItem = useReferencesStore.getState().getRegisteredItem;
+
+  return getRegisteredItem(id, type)?.ref?.current ?? null;
+}
+
 const useSelectionStore = create<SelectionState>((set, get) => ({
   selection: new Map(),
   publicSelection: new Map(),
   selectShiftById: (id, keepExisting = false) => {
-    const getRef = useReferencesStore.getState().getRef;
-    const target = getRef(id, type);
+    const target = getRegisteredRef(id);
     return target ? get().select(id, !keepExisting) : null;
   },
   select: (id, single = true) => {
     const selection = get().selection;
-    const getRef = useReferencesStore.getState().getRef;
-    const refItem = getRef(id, type)?.itemRef;
+    const item = getRegisteredRef(id);
     if (single && selection.size >= 1) {
       get().deselectAll();
     }
-    selection.set(id, { id, refItem });
-    refItem?.current.select({ size: selection.size });
+    selection.set(id, { id });
+    item?.select({ size: selection.size });
     get().setPublicSelection();
     return selection.size;
   },
@@ -41,9 +45,8 @@ const useSelectionStore = create<SelectionState>((set, get) => ({
   deselect: (id, silent = false) => {
     const selection = get().selection;
     if (selection.has(id)) {
-      const getRef = useReferencesStore.getState().getRef;
-      const refItem = getRef(id, type)?.itemRef?.current;
-      refItem?.deselect({
+      const item = getRegisteredRef(id);
+      item?.deselect({
         size: selection.size - 1,
         silent,
       });
